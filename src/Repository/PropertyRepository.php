@@ -1,7 +1,7 @@
 <?php
-
+use Cocur\Slugify\Slugify;
 namespace App\Repository;
-
+use App\Repository\QueryBuilder;
 use App\Entity\Property;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -17,6 +17,38 @@ class PropertyRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Property::class);
+    }
+
+    /**
+      * @return Property[]
+    */
+    public function findAllVisible() : array
+    {
+        return $this-> createQueryBuilder('p')
+                    ->where('p.sold = false')
+                    ->getQuery()
+                    ->getResult();
+    }
+
+     /** 
+      * @return Property[]
+      */
+    public function findLatest() : array
+    {
+        return $this-> createQueryBuilder('p')
+                    ->where('p.sold = false')
+                    ->setMaxResults(4)
+                    ->getQuery()
+                    ->getResult();
+    }
+
+    /**
+      * @return Property[]
+    */
+    private function findVisibleQuery() :QueryBuilder
+    {
+        return $this-> createQueryBuilder('p')
+                ->where('p.sold = false');
     }
 
     // /**
