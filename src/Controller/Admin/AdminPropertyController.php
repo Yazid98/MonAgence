@@ -35,9 +35,35 @@ class AdminPropertyController extends AbstractController
         return $this->render('admin_property/index.html.twig', compact('properties'));
     }
 
+    /**
+     * @Route("/admin_property/admin/create", name="admin_property_new")
+     */
+
+    public function new( Request $request ){
+        //On crée un formulaire
+        $property = new Property();
+        $form = $this->createForm(PropertyType::class, $property);
+
+        //Le formulaire gère la requête vers la base de données
+        $form->handleRequest($request);
+
+        if( $form->isSubmitted() && $form->isValid() )
+        {
+            $this->em->persist($property);
+            $this->em->flush();
+            $this->addFlash('success', 'Créer avec succes');
+            return $this->redirectToRoute('admin_property_index');
+        }
+
+        return $this->render('admin_property/create.html.twig', [
+            'property' => $property,
+            'form' => $form->createView()
+        ] );
+    }
+
 
     /**
-     * @Route("/admin_property/admin/{id}", name="admin_property_edit")
+     * @Route("/admin_property/admin/{id}", name="admin_property_edit", methods="GET|POST")
      */
     public function edit(Property $property, Request $request) 
     {
@@ -48,6 +74,7 @@ class AdminPropertyController extends AbstractController
         if( $form->isSubmitted() && $form->isValid() )
         {
             $this->em->flush();
+            $this->addFlash('success', 'Modifié avec succes');
             return $this->redirectToRoute('admin_property_index');
         }
 
@@ -57,4 +84,19 @@ class AdminPropertyController extends AbstractController
         ] );
     }
 
+
+    /**
+     * @Route("/admin_property/admin/{id}", name="admin_property_delete", methods="DELETE")
+     */
+
+    public function delete( Property $property, Request $request ) 
+    {
+        if ( $this->isCsrfTokenValid('delete'. $property->getId() , $request->get('_token'))) {
+
+            $this->em->remove($property);
+            $this->em->flush();
+            $this->addFlash('success', 'Supprimer avec succès');
+        }
+        return $this->redirectToRoute('admin_property_index');
+    }
 }
