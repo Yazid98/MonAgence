@@ -1,0 +1,27 @@
+{
+    "twig-language.bracePadding": true,
+    "twig-language.braceLine": true,
+    "twig-language.braces": true,
+    "twig-language.correct": true,
+    "twig-language.comments": true,
+    "auto-close-tag.fullMode": true,
+    "auto-close-tag.SublimeText3Mode": true,
+    "beautify.language": {
+    "html": {}
+    },
+    "html.format.indentHandlebars": true,
+    "html.format.indentInnerHtml": true,
+    "twig-language-2.braceLine": true,
+    "twig-language-2.bracePadding": true,
+    "twig-language-2.braces": true,
+    "twig-language-2.commentLine": true,
+    "twig-language-2.comments": true,
+    "workbench.editor.highlightModifiedTabs": true,
+    "editor.wordWrap": "on",
+    "symfony-vscode.showAsseticRoutes": true,
+    "symfony-vscode.phpPath": "C:\\wamp64\\bin\\php\\php7.4.0",
+    "symfony-debug-and-autocomplete.showAsseticRoutes": true,
+    "symfony-debug-and-autocomplete.phpPath": "C:\\wamp64\\bin\\php\\php7.4.0",
+    "symfony-debug-and-autocomplete.consolePath": "C:\\Program Files\\Symfony",
+    "symfony-vscode.phpExecutablePath": "\\usr\\bin\\php"
+}
