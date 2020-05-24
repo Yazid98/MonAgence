@@ -1,7 +1,10 @@
 <?php
-use Cocur\Slugify\Slugify;
 namespace App\Repository;
-use App\Repository\QueryBuilder;
+
+use Doctrine\ORM\Query;
+use Cocur\Slugify\Slugify;
+use Doctrine\ORM\QueryBuilder;
+use App\Entity\PropertySearch;
 use App\Entity\Property;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,32 +22,40 @@ class PropertyRepository extends ServiceEntityRepository
         parent::__construct($registry, Property::class);
     }
 
-    /**
-      * @return Property[]
-    */
-    public function findAllVisible() : array
-    {
-        return $this-> createQueryBuilder('p')
-                    ->where('p.sold = false')
-                    ->getQuery()
-                    ->getResult();
-    }
-
-     /** 
+     /**
       * @return Property[]
       */
-    public function findLatest() : array
-    {
-        return $this-> createQueryBuilder('p')
-                    ->where('p.sold = false')
-                    ->setMaxResults(4)
-                    ->getQuery()
-                    ->getResult();
-    }
+      public function findLatest(): array
+      {
+          return $this->findVisibleQuery()
+          ->setMaxResults(4)
+          ->getQuery()
+          ->getResult();
+      }
 
     /**
-      * @return Property[]
-    */
+     * @return Query
+     */
+    public function findAllVisibleQuery(PropertySearch $search): Query
+    {   
+        $query = $this->findVisibleQuery();
+        
+        if($search->getMaxPrice())
+        {
+            $query = $query->andWhere('p.price < :maxprice')
+                           ->setParameter('maxprice', $search->getMaxPrice());
+        }
+
+        if($search->getMinSurface())
+        {
+            $query = $query->andWhere('p.surface >= :minsurface')
+                           ->setParameter('minsurface', $search->getMinSurface());
+        }
+
+        return $query->getQuery();
+    }
+
+
     private function findVisibleQuery() :QueryBuilder
     {
         return $this-> createQueryBuilder('p')
