@@ -6,6 +6,8 @@
     "twig-language.comments": true,
     "auto-close-tag.fullMode": true,
     "auto-close-tag.SublimeText3Mode": true,
+    "php.suggest.basic": false,
+    "editor.quickSuggestions": { "comments": true },
     "beautify.language": {
     "html": {}
     },
@@ -23,5 +25,21 @@
     "symfony-debug-and-autocomplete.showAsseticRoutes": true,
     "symfony-debug-and-autocomplete.phpPath": "C:\\wamp64\\bin\\php\\php7.4.0",
     "symfony-debug-and-autocomplete.consolePath": "C:\\Program Files\\Symfony",
-    "symfony-vscode.phpExecutablePath": "\\usr\\bin\\php"
+    "symfony-vscode.phpExecutablePath": "\\usr\\bin\\php",
+    "intelephense.files.exclude": [
+        "**/.git/**",
+        "**/.svn/**",
+        "**/.hg/**",
+        "**/CVS/**",
+        "**/.DS_Store/**",
+        "**/node_modules/**",
+        "**/bower_components/**",
+        "**/vendor/**/{Test,test,Tests,tests}/**/*Test.php"
+      ],
+      "php-cs-fixer.rules": "@PhpCsFixer",
+      "[php]": {
+        "editor.defaultFormatter": "junstyle.php-cs-fixer",
+        "editor.formatOnSave": true
+      },
+      "sqltools.connections": []
 }

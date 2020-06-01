@@ -2,9 +2,9 @@
 
 namespace App\Form;
 
-
+use App\Entity\Option;
 use App\Entity\PropertySearch;
-use Symfony\Component\Form\Extension\Core\Type;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,25 +19,34 @@ class PropertySearchType extends AbstractType
                 'required' => false,
                 'label' => false,
                 'attr' => [
-                    'placeholder' =>'Surface minimale'
-                ]
+                    'placeholder' => 'Surface minimale',
+                ],
             ])
 
             ->add('maxPrice', IntegerType::class, [
                 'required' => false,
                 'label' => false,
                 'attr' => [
-                    'placeholder' =>'Budget Max'
-                ]
-            ]);
+                    'placeholder' => 'Budget Max',
+                ],
+            ])
+            ->add('options', EntityType::class, [
+                'required' => false,
+                'label' => false,
+                'class' => Option::class,
+                'choice_label' => 'name',
+                'multiple' => true
+
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' =>PropertySearch::class,
+            'data_class' => PropertySearch::class,
             'method' => 'get',
-            'csrf_protection' => false
+            'csrf_protection' => false,
         ]);
     }
 

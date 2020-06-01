@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use DateTime;
+use App\Repository\PropertyRepository;
 use Cocur\Slugify\Slugify;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\PropertyRepository;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @UniqueEntity("title")
@@ -17,10 +17,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Property
 {
-
     const HEAT = [
         0 => 'Electrique',
-        1=> 'Gaz'
+        1 => 'Gaz',
     ];
 
     /**
@@ -91,7 +90,7 @@ class Property
     /**
      * @ORM\Column(type="boolean", options={"default" : false})
      */
-    private $sold= false;
+    private $sold = false;
 
     /**
      * @ORM\Column(type="datetime")
@@ -99,13 +98,13 @@ class Property
     private $created_at;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Option::class, mappedBy="properties")
+     * @ORM\ManyToMany(targetEntity=Option::class, inversedBy="properties")
      */
     private $options;
 
     public function __construct()
     {
-        $this -> created_at = new \DateTime();
+        $this->created_at = new \DateTime();
         $this->options = new ArrayCollection();
     }
 
@@ -119,7 +118,7 @@ class Property
         return $this->title;
     }
 
-    public function getSlug() : string
+    public function getSlug(): string
     {
         return (new Slugify())->slugify($this->title);
     }
@@ -205,7 +204,7 @@ class Property
 
     public function getFormattedPrice(): string
     {
-       return number_format($this->price, 0, '', ' ' );
+        return number_format($this->price, 0, '', ' ');
     }
 
     public function getHeat(): ?int
