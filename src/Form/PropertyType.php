@@ -25,15 +25,16 @@ class PropertyType extends AbstractType
             ->add('price')
             ->add('heat', ChoiceType::class, [
                 'choices' => $this->GetChoices(),
-                'label' => 'Chauffage'
+                'label' => 'Chauffage',
             ])
             ->add('options', EntityType::class, [
                 'class' => Option::class,
                 'choice_label' => 'name',
-                'multiple' => true
+                'required' => false,
+                'multiple' => true,
             ])
             ->add('imageFile', FileType::class, [
-                'required' =>false
+                'required' => false,
             ])
             ->add('city')
             ->add('address')
