@@ -120,11 +120,6 @@ class Property
      */
     private $options;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $updated_at;
-
     public function __construct()
     {
         $this->created_at = new \DateTime();
