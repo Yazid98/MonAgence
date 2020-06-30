@@ -43,7 +43,9 @@ class AdminPropertyController extends AbstractController
         //Le formulaire gère la requête vers la base de données
         $form->handleRequest($request);
 
+        //Si le formulaire est valide
         if ($form->isSubmitted() && $form->isValid()) {
+            //Enregister les informations dans la BDD
             $this->em->persist($property);
             $this->em->flush();
             $this->addFlash('success', 'Créer avec succes');

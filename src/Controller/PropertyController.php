@@ -1,23 +1,23 @@
 <?php
 
 namespace App\Controller;
-use Cocur\Slugify\Slugify;
-use App\Repository\PropertyRepository;
+
 use App\Entity\Property;
 use App\Entity\PropertySearch;
 use App\Form\PropertySearchType;
-use Doctrine\Common\Persistence\ObjectManager;
+use App\Repository\PropertyRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityManager;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Controlleur pour la classe propriétés.
+ */
 class PropertyController extends AbstractController
 {
-
     private $repository;
 
     private $em;
@@ -44,27 +44,27 @@ class PropertyController extends AbstractController
         );
 
         // dump($properties);
-        return $this->render('property/index.html.twig' , [
-            'current_menu' => 'properties' ,
+        return $this->render('property/index.html.twig', [
+            'current_menu' => 'properties',
             'properties' => $properties,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
-}
+    }
 
     /**
      * @Route("/biens/{slug}-{id}", name="property.show", requirements={"slug": "[a-z0-9\-]*"} )
      */
-    public function show(Property $property ,string $slug) : Response
+    public function show(Property $property, string $slug): Response
     {
         if ($property->getSlug() !== $slug) {
-            return $this->redirectToRoute('property.show',[
-                'id' => $property -> getId(),
-                'slug' => $property->getSlug()
+            return $this->redirectToRoute('property.show', [
+                'id' => $property->getId(),
+                'slug' => $property->getSlug(),
             ], 301);
         }
 
         return $this->render('property/show.html.twig', [
             'property' => $property,
-            'current_menu'=>'properties']);
+            'current_menu' => 'properties', ]);
     }
 }
